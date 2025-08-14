@@ -7,8 +7,8 @@ const shouldAnalyzeBundles = process.env.ANALYZE === "true";
 let nextConfig = {
   reactStrictMode: true,
   eslint: {},
-  output: process.env.NODE_ENV === "production" ? "export" : "standalone",
-  distDir: "out/dist",
+  output: "standalone",
+  distDir: ".next",
   images: {
     remotePatterns: [
  new URL ("https://a-us.storyblok.com/**")
@@ -26,19 +26,17 @@ let nextConfig = {
   },
 };
 
-// rewrite rules affect only development mode, since Next router will return 404 for paths that only exist in react-router
-if (process.env.NODE_ENV !== "production") {
-  nextConfig = {
-    ...nextConfig,
-    async rewrites() {
-      return [
-        {
-          source: "/((?!api|_next|favicon.ico).*)",
-          destination: "/",
-        },
-      ]
-    },
-  }
+// Add rewrites for both development and production
+nextConfig = {
+  ...nextConfig,
+  async rewrites() {
+    return [
+      {
+        source: "/((?!api|_next|favicon.ico).*)",
+        destination: "/",
+      },
+    ]
+  },
 }
 
 // Bundle analyzer abilitato con flag ANALYZE=true
