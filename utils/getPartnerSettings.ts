@@ -1,8 +1,10 @@
 import { SettingsGlobalAppStoryblok } from "@typings/storyblok";
+import path from "path";
 
 export async function getPartnerSettings(partnerId: string) {
        try {
-        const response = await import(`/public/partner-settings/${partnerId}.json`,{ with: {type: 'json'}  });
+        const partnerSettingsJsonFilePath = path.join(process.cwd(), "public", "partner-settings", `${partnerId}.json`);
+        const response = await import(partnerSettingsJsonFilePath,{ with: {type: 'json'}  });
         
         const data: SettingsGlobalAppStoryblok = response.default;
         if (!data) {
