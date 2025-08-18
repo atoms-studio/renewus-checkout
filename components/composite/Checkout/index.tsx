@@ -28,6 +28,7 @@ import { LayoutDefault } from "components/layouts/LayoutDefault"
 import { Accordion, AccordionItem } from "components/ui/Accordion"
 import { Footer } from "components/ui/Footer"
 import { Logo } from "components/ui/Logo"
+import RenewUsFooter from "components/ui/RenewUsFooter"
 import RenewUsHeader from "components/ui/RenewUsHeader"
 import { useRouter } from "next/router"
 import { useContext } from "react"
@@ -36,7 +37,6 @@ import tw from "twin.macro"
 
 interface Props {
   logoUrl: NullableType<string>
-  headerLogo?: HeaderLogo
   primaryColor: string
   orderNumber: string
   companyName: string
@@ -51,7 +51,6 @@ interface Props {
 
 const Checkout: React.FC<Props> = ({
   logoUrl,
-  headerLogo,
   primaryColor,
   orderNumber,
   companyName,
@@ -127,23 +126,20 @@ const Checkout: React.FC<Props> = ({
     return (
       <CustomerContainer isGuest={ctx.isGuest}>
         <LayoutDefault
-          topPageHeader={
-            <>
-              {headerLogo?.image && <RenewUsHeader logo={{ ...headerLogo }} />}
-            </>
-          }
           aside={
-            <Sidebar>
-              <Logo
-                logoUrl={logoUrl}
-                companyName={companyName}
-                className="hidden md:block"
-              />
-              <SummaryWrapper>
-                <OrderSummary appCtx={ctx} hideItemCodes={hideItemCodes} />
-              </SummaryWrapper>
-              {/* <Footer /> */}
-            </Sidebar>
+            <>
+              <Sidebar>
+                <Logo
+                  logoUrl={logoUrl}
+                  companyName={companyName}
+                  className="hidden md:block"
+                />
+                <SummaryWrapper>
+                  <OrderSummary appCtx={ctx} hideItemCodes={hideItemCodes} />
+                </SummaryWrapper>
+              </Sidebar>
+              <RenewUsFooter copyright={"bibidi"} />
+            </>
           }
           main={
             <div>

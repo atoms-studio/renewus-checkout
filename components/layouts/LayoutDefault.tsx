@@ -1,19 +1,20 @@
 import { Base } from "components/ui/Base"
 import { Card } from "components/ui/Card"
 import { Container } from "components/ui/Container"
+import RenewUsHeader from "components/ui/RenewUsHeader"
 import styled from "styled-components"
 import tw from "twin.macro"
 
 interface Props {
   aside: ChildrenType
   main: ChildrenType
-  topPageHeader?: ChildrenType
+  partnerHeaderLogo?: HeaderLogo
 }
 
 export const LayoutDefault: React.FC<Props> = ({
   main,
   aside,
-  topPageHeader,
+  partnerHeaderLogo,
 }) => {
   return (
     <Base>
@@ -21,7 +22,9 @@ export const LayoutDefault: React.FC<Props> = ({
         <Wrapper>
           <Aside>{aside}</Aside>
           <Main>
-            {topPageHeader}
+            {partnerHeaderLogo?.image && (
+              <RenewUsHeader logo={{ ...partnerHeaderLogo }} />
+            )}
             <Card $fullHeight>{main}</Card>
           </Main>
         </Wrapper>
