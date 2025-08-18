@@ -1,9 +1,7 @@
 // next.config.js
-const nextBuildId = require("next-build-id");
+const nextBuildId = require("next-build-id")
 
-const shouldAnalyzeBundles = process.env.ANALYZE === "true";
-
-console.log('NODE_ENV CHECK:', process.env.NODE_ENV);
+const shouldAnalyzeBundles = process.env.ANALYZE === "true"
 
 /** @type {import('next').NextConfig} */
 let nextConfig = {
@@ -12,9 +10,7 @@ let nextConfig = {
   output: process.env.NODE_ENV === "production" ? "export" : "standalone",
   distDir: "out/dist",
   images: {
-    remotePatterns: [
- new URL ("https://a-us.storyblok.com/**")
-    ],
+    remotePatterns: [new URL("https://a-us.storyblok.com/**")],
   },
   poweredByHeader: false,
   webpack: (config) => config,
@@ -26,7 +22,7 @@ let nextConfig = {
   logging: {
     incomingRequests: process.env.NODE_ENV !== "production", // true in dev
   },
-};
+}
 
 // rewrite rules affect only development mode, since Next router will return 404 for paths that only exist in react-router
 if (process.env.NODE_ENV !== "production") {
@@ -47,8 +43,8 @@ if (process.env.NODE_ENV !== "production") {
 if (shouldAnalyzeBundles) {
   const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: true,
-  });
-  nextConfig = withBundleAnalyzer(nextConfig);
+  })
+  nextConfig = withBundleAnalyzer(nextConfig)
 }
 
-module.exports = nextConfig;
+module.exports = nextConfig
