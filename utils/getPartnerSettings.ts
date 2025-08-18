@@ -3,7 +3,7 @@ import path from "path";
 
 export async function getPartnerSettings(partnerId: string) {
        try {
-        const partnerSettingsJsonFilePath = path.join(process.cwd(), "public", "partner-settings", `${partnerId}.json`);
+        const partnerSettingsJsonFilePath = path.join(process.cwd(), "partner-settings", `${partnerId}.json`);
         const response = await import(partnerSettingsJsonFilePath,{ with: {type: 'json'}  });
         
         const data: SettingsGlobalAppStoryblok = response.default;
