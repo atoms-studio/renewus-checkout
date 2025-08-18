@@ -28,8 +28,6 @@ import { LayoutDefault } from "components/layouts/LayoutDefault"
 import { Accordion, AccordionItem } from "components/ui/Accordion"
 import { Footer } from "components/ui/Footer"
 import { Logo } from "components/ui/Logo"
-import RenewUsFooter from "components/ui/RenewUsFooter"
-import RenewUsHeader from "components/ui/RenewUsHeader"
 import { useRouter } from "next/router"
 import { useContext } from "react"
 import styled from "styled-components"
@@ -127,7 +125,6 @@ const Checkout: React.FC<Props> = ({
       <CustomerContainer isGuest={ctx.isGuest}>
         <LayoutDefault
           aside={
-            <>
               <Sidebar>
                 <Logo
                   logoUrl={logoUrl}
@@ -138,8 +135,6 @@ const Checkout: React.FC<Props> = ({
                   <OrderSummary appCtx={ctx} hideItemCodes={hideItemCodes} />
                 </SummaryWrapper>
               </Sidebar>
-              <RenewUsFooter copyright={"bibidi"} />
-            </>
           }
           main={
             <div>
