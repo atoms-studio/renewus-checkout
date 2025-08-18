@@ -1,10 +1,10 @@
 import type { SettingsGlobalAppStoryblok } from "@typings/storyblok"
+import fs from "fs"
 import type {
   GetStaticPaths,
   GetStaticProps,
   InferGetStaticPropsType,
 } from "next"
-import fs from "fs"
 import path from "path"
 
 // Static data store that will be populated at build time
@@ -65,22 +65,25 @@ async function fetchPartnerSettings(
   }
 }
 
-const writePartnerSettingsToStaticJson = (partnerId: string, partnerSettings: SettingsGlobalAppStoryblok) => {
-    const settingsDir = path.join(process.cwd(), "public",  "partner-settings")
-    const fileName = path.join(`${partnerId}.json`)
+const writePartnerSettingsToStaticJson = (
+  partnerId: string,
+  partnerSettings: SettingsGlobalAppStoryblok,
+) => {
+  const settingsDir = path.join(process.cwd(), "public", "partner-settings")
+  const fileName = path.join(`${partnerId}.json`)
 
-    if (!fs.existsSync(settingsDir)) {
-      fs.mkdirSync(settingsDir, { recursive: true })
-    }
-    fs.writeFileSync(
-      path.join(settingsDir, fileName),
-      JSON.stringify(partnerSettings, null, 2),
-    )
-    if (!fs.existsSync(path.join(settingsDir, fileName))) {
-      console.error(`Failed to write settings for ${partnerId} to static JSON`)
-    } else {
-        console.info(`✓ Wrote settings for ${partnerId} to static JSON`)
-    }
+  if (!fs.existsSync(settingsDir)) {
+    fs.mkdirSync(settingsDir, { recursive: true })
+  }
+  fs.writeFileSync(
+    path.join(settingsDir, fileName),
+    JSON.stringify(partnerSettings, null, 2),
+  )
+  if (!fs.existsSync(path.join(settingsDir, fileName))) {
+    console.error(`Failed to write settings for ${partnerId} to static JSON`)
+  } else {
+    console.info(`✓ Wrote settings for ${partnerId} to static JSON`)
+  }
 }
 
 export const getStaticPaths = (async () => {
@@ -152,10 +155,10 @@ export const getStaticProps = (async (context) => {
     }
   }
   console.log(`✓ Pre-fetched settings for ${partnerId}`)
-  
+
   // Write the fetched settings to a static JSON file
   writePartnerSettingsToStaticJson(partnerId, settings)
-  
+
   return {
     props: {
       settings,
@@ -170,5 +173,5 @@ export default function Page({
   settings,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   // This page does not have any content. It's just needed to create the JSON files at build time.
-  return ''
+  return ""
 }

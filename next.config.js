@@ -3,6 +3,8 @@ const nextBuildId = require("next-build-id");
 
 const shouldAnalyzeBundles = process.env.ANALYZE === "true";
 
+console.log('NODE_ENV CHECK:', process.env.NODE_ENV);
+
 /** @type {import('next').NextConfig} */
 let nextConfig = {
   reactStrictMode: true,
