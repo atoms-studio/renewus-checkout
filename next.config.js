@@ -1,9 +1,10 @@
-// next.config.js
+// @ts-check
+
 const nextBuildId = require("next-build-id")
 
 const shouldAnalyzeBundles = process.env.ANALYZE === "true"
 
-/** @type {import('next').NextConfig} */
+/** @type { import('next').NextConfig } */
 let nextConfig = {
   reactStrictMode: true,
   eslint: {},
@@ -13,10 +14,14 @@ let nextConfig = {
     remotePatterns: [new URL("https://a-us.storyblok.com/**")],
   },
   poweredByHeader: false,
-  webpack: (config) => config,
+  webpack: (config) => {
+    return config
+  },
+  // When when app is exported as SPA and served in a sub-folder
   assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH
     ? `${process.env.NEXT_PUBLIC_BASE_PATH}/`
     : undefined,
+  // https://nextjs.org/docs/api-reference/next.config.js/custom-page-extensions#including-non-page-files-in-the-pages-directory
   pageExtensions: ["page.tsx"],
   generateBuildId: () => nextBuildId({ dir: __dirname }),
   logging: {
@@ -39,7 +44,6 @@ if (process.env.NODE_ENV !== "production") {
   }
 }
 
-// Bundle analyzer abilitato con flag ANALYZE=true
 if (shouldAnalyzeBundles) {
   const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: true,
