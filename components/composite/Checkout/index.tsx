@@ -35,6 +35,7 @@ import tw from "twin.macro"
 
 interface Props {
   logoUrl: NullableType<string>
+  headerLogo?: HeaderLogo
   primaryColor: string
   orderNumber: string
   companyName: string
@@ -49,6 +50,7 @@ interface Props {
 
 const Checkout: React.FC<Props> = ({
   logoUrl,
+  headerLogo,
   primaryColor,
   orderNumber,
   companyName,
@@ -124,16 +126,9 @@ const Checkout: React.FC<Props> = ({
     return (
       <CustomerContainer isGuest={ctx.isGuest}>
         <LayoutDefault
+          partnerHeaderLogo={headerLogo}
           aside={
             <Sidebar>
-              {
-                // remove logo for customization
-                /* <Logo
-                logoUrl={logoUrl}
-                companyName={companyName}
-                className="hidden md:block"
-              /> */
-              }
               <SummaryWrapper>
                 <OrderSummary appCtx={ctx} hideItemCodes={hideItemCodes} />
               </SummaryWrapper>
@@ -141,14 +136,6 @@ const Checkout: React.FC<Props> = ({
           }
           main={
             <div>
-              {
-                // remove logo for customization
-                /* <Logo
-                logoUrl={logoUrl}
-                companyName={companyName}
-                className="block md:hidden"
-              /> */
-              }
               <MainHeader orderNumber={orderNumber} />
               <StepNav
                 steps={steps}
@@ -157,52 +144,6 @@ const Checkout: React.FC<Props> = ({
                 lastActivable={lastActivableStep}
               />
               <Accordion>
-                <AccordionProvider
-                  activeStep={activeStep}
-                  lastActivableStep={lastActivableStep}
-                  setActiveStep={setActiveStep}
-                  step="Customer"
-                  steps={steps}
-                  isStepDone={
-                    (ctx.isShipmentRequired &&
-                      ctx.hasShippingAddress &&
-                      ctx.hasBillingAddress) ||
-                    (!ctx.isShipmentRequired && ctx.hasBillingAddress)
-                  }
-                >
-                  {/* <AccordionItem
-                    index={1}
-                    header={
-                      <StepHeaderCustomer step={getStepNumber("Customer")} />
-                    }
-                  >
-                    <StepCustomer className="mb-6" step={1} />
-                  </AccordionItem> */}
-                </AccordionProvider>
-                <>
-                  {ctx.isShipmentRequired && (
-                    <AccordionProvider
-                      activeStep={activeStep}
-                      lastActivableStep={lastActivableStep}
-                      setActiveStep={setActiveStep}
-                      step="Shipping"
-                      steps={steps}
-                      isStepRequired={ctx.isShipmentRequired}
-                      isStepDone={ctx.hasShippingMethod}
-                    >
-                      <AccordionItem
-                        index={2}
-                        header={
-                          <StepHeaderShipping
-                            step={getStepNumber("Shipping")}
-                          />
-                        }
-                      >
-                        <StepShipping className="mb-6" step={2} />
-                      </AccordionItem>
-                    </AccordionProvider>
-                  )}
-                </>
                 <AccordionProvider
                   activeStep={activeStep}
                   lastActivableStep={lastActivableStep}
