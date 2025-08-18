@@ -67,6 +67,7 @@ module.exports = {
         md: "0.938rem",
         ss: "0.813rem",
         xxs: "0.75rem",
+        note: "0.563rem"
       },
       backgroundSize: {
         16: "1rem",

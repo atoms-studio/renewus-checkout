@@ -1,6 +1,7 @@
 import { Base } from "components/ui/Base"
 import { Card } from "components/ui/Card"
 import { Container } from "components/ui/Container"
+import RenewUsFooter from "components/ui/RenewUsFooter"
 import RenewUsHeader from "components/ui/RenewUsHeader"
 import styled from "styled-components"
 import tw from "twin.macro"
@@ -20,7 +21,10 @@ export const LayoutDefault: React.FC<Props> = ({
     <Base>
       <Container>
         <Wrapper>
-          <Aside>{aside}</Aside>
+          <Aside>
+            {aside}
+            <RenewUsFooter copyright="ciao ciao test" />
+          </Aside>
           <Main>
             {partnerHeaderLogo?.image && (
               <RenewUsHeader logo={{ ...partnerHeaderLogo }} />
