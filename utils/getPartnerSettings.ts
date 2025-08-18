@@ -10,18 +10,24 @@ export async function getPartnerSettings(partnerId: string) {
 
     // retrieve the partner settings JSON file from the file created at build time
     const partnerSettingsJsonFilePath = path.join(
-      baseUrl,
       "partner-settings",
       `${partnerId}.json`,
     )
     const response = await fetch(partnerSettingsJsonFilePath, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+        
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }   
+        ,
     })
 
-    const data: SettingsGlobalAppStoryblok = await response.json()
+    console.log(response)
+
+    const data: SettingsGlobalAppStoryblok = await response.json().catch((error) => {
+        console.error("Error parsing JSON response:", error)
+    })
+    
     if (!data) {
       console.warn(`No settings found for partnerId: ${partnerId}`)
       return undefined
