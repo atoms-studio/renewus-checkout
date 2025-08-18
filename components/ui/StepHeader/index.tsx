@@ -9,11 +9,7 @@ interface Props {
   onEditRequest?: () => void
 }
 
-export const StepHeader: React.FC<Props> = ({
-  status,
-  label,
-  info,
-}) => {
+export const StepHeader: React.FC<Props> = ({ status, label, info }) => {
   return (
     <Wrapper disabled={status === "disabled"}>
       <Body>
