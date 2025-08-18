@@ -127,6 +127,7 @@ const Checkout: React.FC<Props> = ({
       <CustomerContainer isGuest={ctx.isGuest}>
         <LayoutDefault
           partnerHeaderLogo={headerLogo}
+          partnerName={companyName}
           aside={
             <Sidebar>
               <SummaryWrapper>

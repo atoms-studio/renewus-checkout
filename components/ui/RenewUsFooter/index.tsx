@@ -12,7 +12,6 @@ interface RenewUsFooterProps {
 
 export default function RenewUsFooter({
   copyright,
-  padding,
 }: RenewUsFooterProps) {
   return (
     <footer className="bg-brand-dark pb-[83px] md:pb-0">

@@ -3,6 +3,7 @@ import type { SettingsGlobalAppStoryblok } from "@typings/storyblok"
 export const DEFAULT_PARTNER_SETTINGS: PartnerSettings = {
   brandColors: { dark: "#000A1C", accent: "#003596", base: "#F1F2F9" },
   headerLogo: { alt: "", image: "" },
+  partnerName: "",
 }
 
 export function mapPartnerSettingsWithDefaults(
@@ -18,5 +19,6 @@ export function mapPartnerSettingsWithDefaults(
       alt: data?.logo?.alt ?? "",
       image: data?.logo?.filename ?? "",
     },
+    partnerName: data?.name_brand || "",
   }
 }

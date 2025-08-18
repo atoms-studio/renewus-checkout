@@ -6,16 +6,14 @@ import hex2hsl from "components/utils/hex2hsl"
 
 interface Props {
   settings: CheckoutSettings
-  brandColors: BrandColors
   children: JSX.Element[] | JSX.Element
 }
 
 const CheckoutContainer = ({
   settings,
-  brandColors,
   children,
 }: Props): JSX.Element => {
-  const primaryColor = hex2hsl(brandColors.accent)
+  const primaryColor = hex2hsl(settings.primaryColor)
 
   return (
     <div>
@@ -26,8 +24,8 @@ const CheckoutContainer = ({
       >
         <GlobalStylesProvider
           primaryColor={primaryColor}
-          brandDark={brandColors.dark}
-          brandBase={brandColors.base}
+          brandDark={settings.partnerSettings.brandColors.dark}
+          brandBase={settings.partnerSettings.brandColors.base}
         />
 
         <AppProvider
