@@ -2,7 +2,7 @@
 // DO NOT MODIFY THIS FILE BY HAND.
 export interface ComponentAccordionListStoryblok {
   accordion_list?: FragmentAccordionStoryblok[]
-  component: 'ComponentAccordionList'
+  component: "ComponentAccordionList"
   _uid: string
   [k: string]: any
 }
@@ -10,7 +10,7 @@ export interface ComponentAccordionListStoryblok {
 export interface AssetStoryblok {
   alt: string | null
   copyright?: string | null
-  fieldtype: 'asset'
+  fieldtype: "asset"
   id: number
   filename: string | null
   name: string
@@ -39,7 +39,7 @@ export interface FaviconsStoryblok {
   favicon_svg?: AssetStoryblok
   favicon_192?: AssetStoryblok
   favicon_512?: AssetStoryblok
-  component: 'favicons'
+  component: "favicons"
   _uid: string
   [k: string]: any
 }
@@ -56,7 +56,7 @@ export interface RichtextStoryblok {
 export interface FragmentAccordionStoryblok {
   question?: string
   answer?: RichtextStoryblok
-  component: 'FragmentAccordion'
+  component: "FragmentAccordion"
   _uid: string
   [k: string]: any
 }
@@ -64,7 +64,7 @@ export interface FragmentAccordionStoryblok {
 export type MultiassetStoryblok = {
   alt: string | null
   copyright?: string | null
-  fieldtype: 'asset'
+  fieldtype: "asset"
   id: number
   filename: string | null
   name: string
@@ -92,23 +92,23 @@ export interface HomepageStoryblok {
   subtitle?: string
   content?: RichtextStoryblok
   Image?: MultiassetStoryblok
-  component: 'Homepage'
+  component: "Homepage"
   _uid: string
   [k: string]: any
 }
 
 export type MultilinkStoryblok =
   | {
-      fieldtype: 'multilink'
+      fieldtype: "multilink"
       id: string
       url: string
       cached_url: string
-      target?: '_blank' | '_self'
+      target?: "_blank" | "_self"
       anchor?: string
       rel?: string
       title?: string
       prep?: string
-      linktype: 'story'
+      linktype: "story"
       story?: {
         name: string
         created_at?: string
@@ -141,33 +141,33 @@ export type MultilinkStoryblok =
       [k: string]: any
     }
   | {
-      fieldtype: 'multilink'
+      fieldtype: "multilink"
       id: string
       url: string
       cached_url: string
-      target?: '_blank' | '_self'
-      linktype: 'url'
+      target?: "_blank" | "_self"
+      linktype: "url"
       rel?: string
       title?: string
       [k: string]: any
     }
   | {
-      fieldtype: 'multilink'
+      fieldtype: "multilink"
       id: string
       url: string
       cached_url: string
-      target?: '_blank' | '_self'
+      target?: "_blank" | "_self"
       email?: string
-      linktype: 'email'
+      linktype: "email"
       [k: string]: any
     }
   | {
-      fieldtype: 'multilink'
+      fieldtype: "multilink"
       id: string
       url: string
       cached_url: string
-      target?: '_blank' | '_self'
-      linktype: 'asset'
+      target?: "_blank" | "_self"
+      linktype: "asset"
       [k: string]: any
     }
 
@@ -178,7 +178,7 @@ export interface SettingsGlobalAppStoryblok {
   email?: string
   link_partner?: Exclude<
     MultilinkStoryblok,
-    { linktype?: 'email' } | { linktype?: 'asset' }
+    { linktype?: "email" } | { linktype?: "asset" }
   >
   brand_colors?: any
   brand_font: string
@@ -186,7 +186,7 @@ export interface SettingsGlobalAppStoryblok {
   message_delivery_pdp?: RichtextStoryblok
   logo?: AssetStoryblok
   logo_footer?: AssetStoryblok
-  currency: 'USD' | 'EUR'
+  currency: "USD" | "EUR"
   modal_need_help?: TopicModalStoryblok[]
   modal_quit?: TopicModalStoryblok[]
   Favicons?: FaviconsStoryblok[]
@@ -196,13 +196,13 @@ export interface SettingsGlobalAppStoryblok {
   base?: string
   privacy_policy?: Exclude<
     MultilinkStoryblok,
-    { linktype?: 'email' } | { linktype?: 'asset' }
+    { linktype?: "email" } | { linktype?: "asset" }
   >
   terms_and_conditions?: Exclude<
     MultilinkStoryblok,
-    { linktype?: 'email' } | { linktype?: 'asset' }
+    { linktype?: "email" } | { linktype?: "asset" }
   >
-  component: 'SettingsGlobalApp'
+  component: "SettingsGlobalApp"
   _uid: string
   [k: string]: any
 }
@@ -210,15 +210,15 @@ export interface SettingsGlobalAppStoryblok {
 export interface StaticDataFilesStoryblok {
   name?: string
   product_descriptions?: AssetStoryblok
-  component: 'StaticDataFiles'
+  component: "StaticDataFiles"
   _uid: string
   [k: string]: any
 }
 
 export interface SplashPageStoryblok {
-  type?: '' | 'Lottiefiles' | 'Image'
+  type?: "" | "Lottiefiles" | "Image"
   splash_file?: AssetStoryblok
-  component: 'splash_page'
+  component: "splash_page"
   _uid: string
   [k: string]: any
 }
@@ -228,7 +228,7 @@ export interface StepPageStoryblok {
   description_primary?: RichtextStoryblok
   title_secondary?: string
   description_secondary?: RichtextStoryblok
-  component: 'StepPage'
+  component: "StepPage"
   _uid: string
   [k: string]: any
 }
@@ -240,7 +240,7 @@ export interface TopicModalStoryblok {
   subtitle?: string
   description?: RichtextStoryblok
   qa?: ComponentAccordionListStoryblok[]
-  component: 'TopicModal'
+  component: "TopicModal"
   _uid: string
   [k: string]: any
 }
@@ -251,7 +251,7 @@ export interface TopicTutorialStoryblok {
   description?: string
   video_tutorial?: AssetStoryblok
   fullscreenVideo?: boolean
-  component: 'TopicTutorial'
+  component: "TopicTutorial"
   _uid: string
   [k: string]: any
 }
@@ -259,7 +259,7 @@ export interface TopicTutorialStoryblok {
 export interface TutorialPageStoryblok {
   internal_title?: string
   steps?: TopicTutorialStoryblok[]
-  component: 'TutorialPage'
+  component: "TutorialPage"
   _uid: string
   [k: string]: any
 }

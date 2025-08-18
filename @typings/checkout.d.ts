@@ -1,6 +1,6 @@
 declare namespace Organization {
   type DefaultConfig =
-    import('@commercelayer/organization-config').DefaultConfig
+    import("@commercelayer/organization-config").DefaultConfig
 }
 
 type NullableType<T> = T | null | undefined
@@ -36,9 +36,9 @@ interface CheckoutSettings {
 }
 
 interface BrandColors {
-    dark: string,
-    accent: string,
-    base: string
+  dark: string
+  accent: string
+  base: string
 }
 
 interface HeaderLogo {
@@ -47,23 +47,9 @@ interface HeaderLogo {
 }
 
 interface PartnerSettings {
-//   brandName: string
-    brandColors: BrandColors
-    headerLogo: HeaderLogo
-//   email: string
-//   phone: string
-//   linkPartner: string
-//   currency: string
-//   logoHeaderPath: string
-//   logoHeaderAlt: string
-//   logoFooterPath: string
-//   logoFooterAlt: string
-//   faviconIcoPath: string
-//   splashFilePath: string
-//   splashFileAlt: string
-//   splashFileType: string
-//   privacyPolicy: string
-//   termsAndConditions: string
+  partnerName: string
+  brandColors: BrandColors
+  headerLogo: HeaderLogo
 }
 
 interface InvalidCheckoutSettings {
@@ -73,18 +59,18 @@ interface InvalidCheckoutSettings {
 
 type CheckoutPageContextProps = Pick<
   CheckoutSettings,
-  | 'accessToken'
-  | 'orderId'
-  | 'logoUrl'
-  | 'isGuest'
-  | 'companyName'
-  | 'endpoint'
-  | 'language'
-  | 'primaryColor'
-  | 'favicon'
-  | 'gtmId'
-  | 'supportEmail'
-  | 'supportPhone'
-  | 'termsUrl'
-  | 'privacyUrl'
+  | "accessToken"
+  | "orderId"
+  | "logoUrl"
+  | "isGuest"
+  | "companyName"
+  | "endpoint"
+  | "language"
+  | "primaryColor"
+  | "favicon"
+  | "gtmId"
+  | "supportEmail"
+  | "supportPhone"
+  | "termsUrl"
+  | "privacyUrl"
 >
