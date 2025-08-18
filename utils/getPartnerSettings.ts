@@ -14,7 +14,7 @@ export async function getPartnerSettings(partnerId: string) {
       "partner-settings",
       `${partnerId}.json`,
     )
-    const response = await fetch(baseUrl, {
+    const response = await fetch(partnerSettingsJsonFilePath, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
