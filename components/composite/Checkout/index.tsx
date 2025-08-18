@@ -126,11 +126,14 @@ const Checkout: React.FC<Props> = ({
         <LayoutDefault
           aside={
             <Sidebar>
-              <Logo
+              {
+                // remove logo for customization
+                /* <Logo
                 logoUrl={logoUrl}
                 companyName={companyName}
                 className="hidden md:block"
-              />
+              /> */
+              }
               <SummaryWrapper>
                 <OrderSummary appCtx={ctx} hideItemCodes={hideItemCodes} />
               </SummaryWrapper>
@@ -138,6 +141,14 @@ const Checkout: React.FC<Props> = ({
           }
           main={
             <div>
+              {
+                // remove logo for customization
+                /* <Logo
+                logoUrl={logoUrl}
+                companyName={companyName}
+                className="block md:hidden"
+              /> */
+              }
               <MainHeader orderNumber={orderNumber} />
               <StepNav
                 steps={steps}
