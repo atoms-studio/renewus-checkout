@@ -1,10 +1,10 @@
 import { jwtDecode, jwtIsSalesChannel } from "@commercelayer/js-auth"
 import { getMfeConfig } from "@commercelayer/organization-config"
 import CommerceLayer, {
-  type CommerceLayerClient,
   CommerceLayerStatic,
-  type Order,
+  type CommerceLayerClient,
   type Organization,
+  type Order,
 } from "@commercelayer/sdk"
 import retry from "async-retry"
 
