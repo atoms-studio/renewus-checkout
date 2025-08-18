@@ -23,7 +23,6 @@ interface CheckoutSettings {
   slug: string
   logoUrl: NullableType<string>
   companyName: string
-  partnerId: string
   language: string
   primaryColor: string
   favicon: string
@@ -33,6 +32,7 @@ interface CheckoutSettings {
   termsUrl: NullableType<string>
   privacyUrl: NullableType<string>
   config: Organization.DefaultConfig | null
+  partnerSettings: PartnerSettings
 }
 
 interface BrandColors {

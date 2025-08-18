@@ -13,7 +13,11 @@ import {
   LINE_ITEMS_SHIPPABLE,
   LINE_ITEMS_SHOPPABLE,
 } from "components/utils/constants"
-import { DEFAULT_PARTNER_SETTINGS } from "./mapPartnerSettingsWithDefaults"
+import { getPartnerSettings } from "./getPartnerSettings"
+import {
+  DEFAULT_PARTNER_SETTINGS,
+  mapPartnerSettingsWithDefaults,
+} from "./mapPartnerSettingsWithDefaults"
 
 const RETRIES = 2
 
@@ -205,7 +209,7 @@ export const getSettings = async ({
 
   const order = orderResource?.object
 
-  if (!orderResource?.success || !order?.id || !order?.metadata?.partner) {
+  if (!orderResource?.success || !order?.id) {
     console.log("Invalid: order")
     return invalidateCheckout(!orderResource?.bailed)
   }
@@ -251,7 +255,20 @@ export const getSettings = async ({
     return invalidateCheckout()
   }
 
-  console.log("ORDER METADATA", order)
+  // fetch theme settings from Storyblok
+  let partnerSettings = DEFAULT_PARTNER_SETTINGS
+  if (order.metadata?.partner) {
+    const fetchedSettings = await getPartnerSettings(
+      order.metadata?.partner,
+    ).then((_partnerSettings) => {
+      console.log("Fetched partner settings:", _partnerSettings)
+      return mapPartnerSettingsWithDefaults(_partnerSettings)
+    })
+    partnerSettings = { ...fetchedSettings }
+  } else {
+    console.warn("Order metadata does not contain partner information.")
+    console.info("Using default partner settings.")
+  }
 
   const appSettings: CheckoutSettings = {
     accessToken,
@@ -264,9 +281,10 @@ export const getSettings = async ({
     isShipmentRequired,
     validCheckout: true,
     logoUrl: organization.logo_url,
-    companyName: organization.name || "Test company",
+    companyName:
+      partnerSettings.partnerName || organization.name || "Test company",
     language: order.language_code || "en",
-    primaryColor: DEFAULT_PARTNER_SETTINGS.brandColors.accent,
+    primaryColor: partnerSettings.brandColors.accent,
     favicon:
       organization.favicon_url ||
       "https://data.commercelayer.app/assets/images/favicons/favicon-32x32.png",
@@ -286,8 +304,7 @@ export const getSettings = async ({
         accessToken,
       },
     }),
-    // TODO: put a bloody error handler here
-    partnerId: order.metadata.partner,
+    partnerSettings,
   }
 
   return appSettings

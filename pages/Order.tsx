@@ -28,27 +28,8 @@ CheckoutSkeleton.displayName = "Skeleton Loader"
 
 const Order: NextPage = () => {
   const { settings, retryOnError, isLoading } = useSettingsOrInvalid()
-  const [partnerTheme, setPartnerTheme] = useState<PartnerSettings>({
-    ...DEFAULT_PARTNER_SETTINGS,
-  })
-  const [isLoadingPartner, setIsLoadingPartner] = useState(true)
 
-  useEffect(() => {
-    if (settings?.validCheckout) {
-      getPartnerSettings(settings.partnerId).then((partnerSettings) => {
-        console.log("Fetched partner settings:", partnerSettings)
-        const mappedSettings = mapPartnerSettingsWithDefaults(partnerSettings)
-        setPartnerTheme(mappedSettings)
-        setIsLoadingPartner(false)
-      })
-    } else {
-      console.warn("Invalid checkout settings, skipping partner theme fetch.")
-      console.info("Using default settings for partner theme.")
-      setIsLoadingPartner(false)
-    }
-  }, [settings])
-
-  if (isLoading || (!settings && !retryOnError) || isLoadingPartner)
+  if (isLoading || (!settings && !retryOnError))
     return <CheckoutSkeleton />
 
   if (!settings) {
@@ -61,13 +42,12 @@ const Order: NextPage = () => {
   return (
     <DynamicCheckoutContainer
       settings={settings}
-      brandColors={partnerTheme.brandColors}
     >
       <DynamicCheckout
-        logoUrl={settings.logoUrl}
-        headerLogo={partnerTheme?.headerLogo}
+        logoUrl={settings.partnerSettings?.headerLogo.image ?? settings.logoUrl}
+        headerLogo={settings.partnerSettings?.headerLogo}
         primaryColor={
-          partnerTheme?.brandColors?.accent || settings.primaryColor
+          settings.primaryColor
         }
         orderNumber={settings.orderNumber}
         companyName={settings.companyName}
