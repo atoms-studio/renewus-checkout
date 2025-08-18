@@ -1,4 +1,3 @@
-import { C } from "@faker-js/faker/dist/airline-CLphikKp"
 import { Base } from "components/ui/Base"
 import { Card } from "components/ui/Card"
 import { Container } from "components/ui/Container"
