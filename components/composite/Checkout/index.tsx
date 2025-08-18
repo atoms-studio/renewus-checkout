@@ -125,16 +125,16 @@ const Checkout: React.FC<Props> = ({
       <CustomerContainer isGuest={ctx.isGuest}>
         <LayoutDefault
           aside={
-              <Sidebar>
-                <Logo
-                  logoUrl={logoUrl}
-                  companyName={companyName}
-                  className="hidden md:block"
-                />
-                <SummaryWrapper>
-                  <OrderSummary appCtx={ctx} hideItemCodes={hideItemCodes} />
-                </SummaryWrapper>
-              </Sidebar>
+            <Sidebar>
+              <Logo
+                logoUrl={logoUrl}
+                companyName={companyName}
+                className="hidden md:block"
+              />
+              <SummaryWrapper>
+                <OrderSummary appCtx={ctx} hideItemCodes={hideItemCodes} />
+              </SummaryWrapper>
+            </Sidebar>
           }
           main={
             <div>
