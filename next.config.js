@@ -22,7 +22,7 @@ let nextConfig = {
     ? `${process.env.NEXT_PUBLIC_BASE_PATH}/`
     : undefined,
   // https://nextjs.org/docs/api-reference/next.config.js/custom-page-extensions#including-non-page-files-in-the-pages-directory
-  pageExtensions: ["page.tsx", "route.ts"],
+  pageExtensions: ["page.tsx"],
   generateBuildId: () => nextBuildId({ dir: __dirname }),
   logging: {
     incomingRequests: process.env.NODE_ENV !== "production", // true in dev
@@ -36,7 +36,7 @@ if (process.env.NODE_ENV !== "production") {
     async rewrites() {
       return [
         {
-          source: "/((?!api|_next|favicon.ico).*)",
+          source: "/((?!partner-settings|_next|favicon.ico).*)",
           destination: "/",
         },
       ]
