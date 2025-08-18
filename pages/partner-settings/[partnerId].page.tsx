@@ -27,7 +27,7 @@ const handlePathsFetchingError = (error: any) => {
         },
       },
     ],
-    fallback: false,
+    fallback: 'blocking', // Important for static export
   }
 }
 
@@ -129,7 +129,7 @@ export const getStaticPaths = (async () => {
 
   return {
     paths,
-    fallback: false, // Important for static export
+    fallback: 'blocking', // Important for static export
   }
 }) satisfies GetStaticPaths
 
