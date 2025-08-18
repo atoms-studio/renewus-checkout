@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { getSettings } from "utils/getSettings"
 import { getSubdomain } from "utils/getSubdomain"
+
 import { useLocalStorageToken } from "./useLocalStorageToken"
 
 interface UseSettingsOrInvalid {
