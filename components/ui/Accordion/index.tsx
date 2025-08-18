@@ -39,21 +39,6 @@ export const AccordionItem = ({ children, index, header }: Props) => {
         onClick={handleSelection}
       >
         <AccordionTitle>{header}</AccordionTitle>
-        <AccordionIcon>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <title>Accordion icon</title>
-            <path
-              fillRule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </AccordionIcon>
       </AccordionTabHeader>
       <AccordionBody>{children}</AccordionBody>
     </AccordionTab>
@@ -71,7 +56,7 @@ const AccordionTab = styled.div`
   }
 `
 const AccordionTabHeader = styled.div`
-  ${tw`text-brand-dark relative flex items-start justify-between pb-3 pt-5 cursor-pointer transition ease-in-out duration-100 focus:bg-gray-400 md:pt-6 md:pb-0`}
+  ${tw`text-brand-dark relative flex items-start justify-between pb-3 pt-5 transition ease-in-out duration-100 focus:bg-gray-400 md:pt-6 md:pb-0`}
   .disabled & {
     ${tw`pointer-events-none`}
   }
@@ -79,16 +64,7 @@ const AccordionTabHeader = styled.div`
 const AccordionTitle = styled.div`
   ${tw`transition ease-in-out duration-100`}
 `
-const AccordionIcon = styled.div`
-  ${tw`transform transition ease-in-out duration-100`}
-  .active & {
-    ${tw`-rotate-180`}
-  }
 
-  .disabled & {
-    ${tw`text-gray-300`}
-  }
-`
 const AccordionBody = styled.div`
   ${tw`max-h-0 transition duration-100 ease-in opacity-0`}
   .active & {
