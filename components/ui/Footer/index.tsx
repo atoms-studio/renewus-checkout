@@ -6,7 +6,9 @@ import { Logo } from "./cl"
 export const Footer: React.FC = () => {
   return (
     <Wrapper>
-      <LogoWrapper />
+      <LogoWrapper>
+        Powered by <Logo width="135" height="22" className="pl-2" />
+      </LogoWrapper>
     </Wrapper>
   )
 }
