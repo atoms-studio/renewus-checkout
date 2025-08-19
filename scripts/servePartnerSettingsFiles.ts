@@ -1,10 +1,6 @@
 import type { SettingsGlobalAppStoryblok } from "@typings/storyblok"
 import fs from "fs"
-import type {
-  GetStaticPaths,
-  GetStaticProps,
-  InferGetStaticPropsType,
-} from "next"
+import { mapPartnerSettingsWithDefaults } from "utils/mapPartnerSettingsWithDefaults"
 import path from "path"
 import dotenv from "dotenv"
 
@@ -58,7 +54,7 @@ const fetchPartnerSettings = async (
 
 const writePartnerSettingsToStaticJson = (
   partnerId: string,
-  partnerSettings: SettingsGlobalAppStoryblok,
+  partnerSettings: PartnerSettings,
 ) => {
   const settingsDir = path.join(process.cwd(), "public", "partner-settings")
   const fileName = path.join(`${partnerId}.json`)
@@ -125,9 +121,11 @@ const servePartnerSettingsFiles = async () => {
 
     for (const partnerId of partnersList) {
         const settings = await fetchPartnerSettings(partnerId)
-
+        
         if (settings) {
-            writePartnerSettingsToStaticJson(partnerId, settings)
+            //map settings to only write specific properties
+            const mappedSettings = mapPartnerSettingsWithDefaults(settings)
+            writePartnerSettingsToStaticJson(partnerId, mappedSettings)
         } else {
             console.error(`Failed to fetch settings for ${partnerId}`)
         }
