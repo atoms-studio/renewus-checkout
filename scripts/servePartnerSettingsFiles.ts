@@ -6,34 +6,25 @@ import type {
   InferGetStaticPropsType,
 } from "next"
 import path from "path"
+import dotenv from "dotenv"
 
-// Static data store that will be populated at build time
-const staticSettingsData: Record<string, SettingsGlobalAppStoryblok> = {}
+// Load environment variables from .env file
+dotenv.config({ path: [path.resolve(process.cwd(), '.env.local'), path.resolve(process.cwd(), '.env')] })
 
-type SettingsPath = {
-  params: {
-    partnerId: string
-  }
-}
-
+/**
+ * Prints an error message and makes sure that at least one default path is returned.
+ * @param error 
+ * @returns 
+ */
 const handlePathsFetchingError = (error: any) => {
   console.error("Unable to fetch partner paths: ", error)
-  console.info("Returning default path for partner settings")
-  return {
-    paths: [
-      {
-        params: {
-          partnerId: "whitelabel-test",
-        },
-      },
-    ],
-    fallback: false,
-  }
+  console.info("Using default partner path")
+  return ["whitelabel-test"]
 }
 
-async function fetchPartnerSettings(
+const fetchPartnerSettings = async (
   partnerId: string,
-): Promise<SettingsGlobalAppStoryblok | null> {
+): Promise<SettingsGlobalAppStoryblok | null> =>{
   const token = process.env.SB_TOKEN
 
   if (!token) {
@@ -86,9 +77,9 @@ const writePartnerSettingsToStaticJson = (
   }
 }
 
-export const getStaticPaths = (async () => {
+const getPartnersList = async () => {
   const token = process.env.SB_TOKEN
-  let paths: SettingsPath[] = []
+  let paths: string[] = []
 
   if (!token) {
     return handlePathsFetchingError(new Error("Missing token env"))
@@ -110,68 +101,37 @@ export const getStaticPaths = (async () => {
     const stories = responseData.stories
 
     if (!stories || !Array.isArray(stories)) {
-      throw new Error(
-        "Invalid response structure: stories not found or not an array",
+      return handlePathsFetchingError(
+        new Error("Stories not found or not an array"),
       )
     }
 
-    paths = stories.map((story: { slug: string }) => ({
-      params: {
-        partnerId: story.slug,
-      },
-    })) as SettingsPath[]
+    if (stories.length === 0) {
+      return handlePathsFetchingError(new Error("No paths found"))
+    }
+
+    paths = stories.map((story: { slug: string }) => story.slug)
   } catch (error) {
     return handlePathsFetchingError(
       `Invalid response structure\n${JSON.stringify(error, null, 2)}`,
     )
   }
 
-  if (paths.length === 0) {
-    return handlePathsFetchingError(new Error("No paths found"))
-  }
-
-  return {
-    paths,
-    fallback: false,
-  }
-}) satisfies GetStaticPaths
-
-export const getStaticProps = (async (context) => {
-  const partnerId = context.params?.partnerId as string
-
-  if (!partnerId) {
-    return {
-      props: { settings: null },
-    }
-  }
-  // Pre-fetch settings for all partners during build time
-  console.log("Pre-fetching partner settings for static export...")
-  const settings = await fetchPartnerSettings(partnerId)
-
-  if (!settings) {
-    console.log(`✗ Failed to pre-fetch settings for ${partnerId}`)
-    return {
-      props: { settings: null },
-    }
-  }
-  console.log(`✓ Pre-fetched settings for ${partnerId}`)
-
-  // Write the fetched settings to a static JSON file
-  writePartnerSettingsToStaticJson(partnerId, settings)
-
-  return {
-    props: {
-      settings,
-    },
-  }
-}) satisfies GetStaticProps<{
-  settings: SettingsGlobalAppStoryblok | null
-}>
-
-// This component serves JSON data for static export that can be accessed like an API
-export default function Page({
-  settings,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  // This page does not have any content. It's just needed to create the JSON files at build time.
-  return ""
+  return paths
 }
+
+const servePartnerSettingsFiles = async () => {
+    const partnersList = await getPartnersList()
+
+    for (const partnerId of partnersList) {
+        const settings = await fetchPartnerSettings(partnerId)
+
+        if (settings) {
+            writePartnerSettingsToStaticJson(partnerId, settings)
+        } else {
+            console.error(`Failed to fetch settings for ${partnerId}`)
+        }
+    }
+}
+
+servePartnerSettingsFiles()
