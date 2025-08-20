@@ -123,7 +123,7 @@ const servePartnerSettingsFiles = async () => {
         const settings = await fetchPartnerSettings(partnerId)
         
         if (settings) {
-            //map settings to only write specific properties
+            //map settings at build time, in order to only save essential data
             const mappedSettings = mapPartnerSettingsWithDefaults(settings)
             writePartnerSettingsToStaticJson(partnerId, mappedSettings)
         } else {

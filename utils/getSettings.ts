@@ -256,15 +256,11 @@ export const getSettings = async ({
   }
 
   // fetch theme settings from Storyblok
-  let partnerSettings = DEFAULT_PARTNER_SETTINGS
+  let partnerSettings = { ...DEFAULT_PARTNER_SETTINGS }
+
   if (order.metadata?.partner) {
-    const fetchedSettings = await getPartnerSettings(
-      order.metadata?.partner,
-    ).then((_partnerSettings) => {
-      console.log("Fetched partner settings:", _partnerSettings)
-      return mapPartnerSettingsWithDefaults(_partnerSettings)
-    })
-    partnerSettings = { ...fetchedSettings }
+    const fetchedSettings = await getPartnerSettings(order.metadata?.partner)
+    if (fetchedSettings) partnerSettings = { ...fetchedSettings }
   } else {
     console.warn("Order metadata does not contain partner information.")
     console.info("Using default partner settings.")
@@ -281,8 +277,7 @@ export const getSettings = async ({
     isShipmentRequired,
     validCheckout: true,
     logoUrl: organization.logo_url,
-    companyName:
-      partnerSettings.partnerName || organization.name || "Test company",
+    companyName: partnerSettings.partnerName || "",
     language: order.language_code || "en",
     primaryColor: partnerSettings.brandColors.accent,
     favicon:

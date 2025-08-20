@@ -15,11 +15,9 @@ export async function getPartnerSettings(partnerId: string) {
       },
     })
 
-    const data: SettingsGlobalAppStoryblok = await response
-      .json()
-      .catch((error) => {
-        console.error("Error parsing JSON response:", error)
-      })
+    const data: PartnerSettings = await response.json().catch((error) => {
+      console.error("Error parsing JSON response:", error)
+    })
 
     if (!data) {
       console.warn(`No settings found for partnerId: ${partnerId}`)
