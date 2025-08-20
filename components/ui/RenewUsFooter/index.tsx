@@ -1,7 +1,5 @@
 // Next.js React Component
 // This component is designed for use in a Next.js project
-
-import Image from "next/image"
 import React from "react"
 
 interface RenewUsFooterProps {
