@@ -1,6 +1,6 @@
 declare namespace Organization {
   type DefaultConfig =
-    import('@commercelayer/organization-config').DefaultConfig
+    import("@commercelayer/organization-config").DefaultConfig
 }
 
 type NullableType<T> = T | null | undefined
@@ -32,6 +32,24 @@ interface CheckoutSettings {
   termsUrl: NullableType<string>
   privacyUrl: NullableType<string>
   config: Organization.DefaultConfig | null
+  partnerSettings: PartnerSettings
+}
+
+interface BrandColors {
+  dark: string
+  accent: string
+  base: string
+}
+
+interface HeaderLogo {
+  image: string
+  alt: string
+}
+
+interface PartnerSettings {
+  partnerName: string
+  brandColors: BrandColors
+  headerLogo: HeaderLogo
 }
 
 interface InvalidCheckoutSettings {
@@ -41,18 +59,18 @@ interface InvalidCheckoutSettings {
 
 type CheckoutPageContextProps = Pick<
   CheckoutSettings,
-  | 'accessToken'
-  | 'orderId'
-  | 'logoUrl'
-  | 'isGuest'
-  | 'companyName'
-  | 'endpoint'
-  | 'language'
-  | 'primaryColor'
-  | 'favicon'
-  | 'gtmId'
-  | 'supportEmail'
-  | 'supportPhone'
-  | 'termsUrl'
-  | 'privacyUrl'
+  | "accessToken"
+  | "orderId"
+  | "logoUrl"
+  | "isGuest"
+  | "companyName"
+  | "endpoint"
+  | "language"
+  | "primaryColor"
+  | "favicon"
+  | "gtmId"
+  | "supportEmail"
+  | "supportPhone"
+  | "termsUrl"
+  | "privacyUrl"
 >

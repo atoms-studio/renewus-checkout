@@ -9,7 +9,10 @@ interface Props {
   children: JSX.Element[] | JSX.Element
 }
 
-const CheckoutContainer = ({ settings, children }: Props): JSX.Element => {
+const CheckoutContainer = ({
+  settings,
+  children,
+}: Props): JSX.Element => {
   const primaryColor = hex2hsl(settings.primaryColor)
 
   return (
@@ -19,7 +22,11 @@ const CheckoutContainer = ({ settings, children }: Props): JSX.Element => {
         accessToken={settings.accessToken}
         endpoint={settings.endpoint}
       >
-        <GlobalStylesProvider primaryColor={primaryColor} />
+        <GlobalStylesProvider
+          primaryColor={primaryColor}
+          brandDark={settings.partnerSettings.brandColors.dark}
+          brandBase={settings.partnerSettings.brandColors.base}
+        />
 
         <AppProvider
           orderId={settings.orderId}

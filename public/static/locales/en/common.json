@@ -9,7 +9,8 @@
         "free": "Free",
         "apply": "Apply",
         "privacy_and_terms": "By clicking the checkbox you agree to <bold><termsUrl>terms</termsUrl></bold> and <bold><privacyUrl>privacy</privacyUrl></bold>.",
-        "checkoutTitle": "Checkout"
+        "checkoutTitle": "Checkout",
+        "renewUsCopyright": "© {{partnerName}} {{year}} • All rights reserved"
     },
     "error": {
         "general": "General error",

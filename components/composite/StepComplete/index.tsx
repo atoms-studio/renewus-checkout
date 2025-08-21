@@ -86,11 +86,6 @@ export const StepComplete: React.FC<Props> = ({
       <Base>
         <Top ref={topRef}>
           <Wrapper>
-            <Logo
-              logoUrl={logoUrl}
-              companyName={companyName}
-              className="self-center pt-10 pl-4 mb-10 md:self-auto"
-            />
             <Main>
               <div className="p-8">
                 <CheckIcon />
@@ -104,7 +99,7 @@ export const StepComplete: React.FC<Props> = ({
                   i18nKey={"stepComplete.description"}
                   values={{ orderNumber }}
                   components={{
-                    WrapperOrderId: <strong className="text-black" />,
+                    WrapperOrderId: <strong className="text-brand-dark" />,
                   }}
                 />
               </Text>

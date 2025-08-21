@@ -3,6 +3,12 @@ import { RetryError } from "components/composite/RetryError"
 import { useSettingsOrInvalid } from "components/hooks/useSettingsOrInvalid"
 import type { NextPage } from "next"
 import dynamic from "next/dynamic"
+import { useEffect, useState } from "react"
+import { getPartnerSettings } from "utils/getPartnerSettings"
+import {
+  DEFAULT_PARTNER_SETTINGS,
+  mapPartnerSettingsWithDefaults,
+} from "utils/mapPartnerSettingsWithDefaults"
 
 const DynamicCheckoutContainer = dynamic(
   () => import("components/composite/CheckoutContainer"),
@@ -23,7 +29,8 @@ CheckoutSkeleton.displayName = "Skeleton Loader"
 const Order: NextPage = () => {
   const { settings, retryOnError, isLoading } = useSettingsOrInvalid()
 
-  if (isLoading || (!settings && !retryOnError)) return <CheckoutSkeleton />
+  if (isLoading || (!settings && !retryOnError))
+    return <CheckoutSkeleton />
 
   if (!settings) {
     if (retryOnError) {
@@ -33,10 +40,15 @@ const Order: NextPage = () => {
   }
 
   return (
-    <DynamicCheckoutContainer settings={settings}>
+    <DynamicCheckoutContainer
+      settings={settings}
+    >
       <DynamicCheckout
-        logoUrl={settings.logoUrl}
-        primaryColor={settings.primaryColor}
+        logoUrl={settings.partnerSettings?.headerLogo.image ?? settings.logoUrl}
+        headerLogo={settings.partnerSettings?.headerLogo}
+        primaryColor={
+          settings.primaryColor
+        }
         orderNumber={settings.orderNumber}
         companyName={settings.companyName}
         supportEmail={settings.supportEmail}

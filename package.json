@@ -7,6 +7,8 @@
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
+    "predev": "pnpm run prebuild",
+    "prebuild": "pnpx tsx scripts/servePartnerSettingsFiles.ts",
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start -p $PORT",

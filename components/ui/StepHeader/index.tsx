@@ -1,8 +1,6 @@
 import styled from "styled-components"
 import tw from "twin.macro"
 
-import { Badge } from "../Badge"
-
 interface Props {
   status: "edit" | "done" | "disabled" | "skip"
   label: string
@@ -11,17 +9,11 @@ interface Props {
   onEditRequest?: () => void
 }
 
-export const StepHeader: React.FC<Props> = ({
-  status,
-  label,
-  info,
-  stepNumber,
-}) => {
+export const StepHeader: React.FC<Props> = ({ status, label, info }) => {
   return (
     <Wrapper disabled={status === "disabled"}>
       <Body>
         <Top>
-          <Badge status={status} stepNumber={stepNumber} />
           <Title data-testid="step-header-customer">{label}</Title>
         </Top>
         <Info data-testid="step-header-info">
@@ -49,9 +41,9 @@ const Top = styled.div`
 `
 
 const Title = styled.h2`
-  ${tw`text-lg font-semibold leading-none pl-2`}
+  ${tw`text-lg font-semibold leading-none`}
 `
 
 const Info = styled.div`
-  ${tw`text-gray-400 text-sm pl-8`}
+  ${tw`text-gray-400 text-sm`}
 `

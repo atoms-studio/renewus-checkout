@@ -35,5 +35,8 @@ yarn-error.log*
 
 cypress/fixtures/*
 
+# static json files
+/public/partner-settings
+
 # vercel
 .vercel

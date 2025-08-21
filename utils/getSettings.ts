@@ -1,10 +1,10 @@
 import { jwtDecode, jwtIsSalesChannel } from "@commercelayer/js-auth"
 import { getMfeConfig } from "@commercelayer/organization-config"
 import CommerceLayer, {
-  CommerceLayerStatic,
   type CommerceLayerClient,
-  type Organization,
+  CommerceLayerStatic,
   type Order,
+  type Organization,
 } from "@commercelayer/sdk"
 import retry from "async-retry"
 
@@ -13,6 +13,11 @@ import {
   LINE_ITEMS_SHIPPABLE,
   LINE_ITEMS_SHOPPABLE,
 } from "components/utils/constants"
+import { getPartnerSettings } from "./getPartnerSettings"
+import {
+  DEFAULT_PARTNER_SETTINGS,
+  mapPartnerSettingsWithDefaults,
+} from "./mapPartnerSettingsWithDefaults"
 
 const RETRIES = 2
 
@@ -106,6 +111,7 @@ function getOrder(
           "line_items",
           "customer",
           "payment_status",
+          "metadata",
         ],
         line_items: ["item_type", "item"],
       },
@@ -133,9 +139,8 @@ function getTokenInfo(accessToken: string) {
         owner,
         marketId: payload.market?.id[0],
       }
-    } else {
-      return {}
     }
+    return {}
   } catch (e) {
     console.log(`error decoding access token: ${e}`)
     return {}
@@ -179,7 +184,8 @@ export const getSettings = async ({
 
   if (isProduction() && (subdomain !== slug || kind !== "sales_channel")) {
     return invalidateCheckout()
-  } else if (kind !== "sales_channel") {
+  }
+  if (kind !== "sales_channel") {
     return invalidateCheckout()
   }
 
@@ -249,6 +255,17 @@ export const getSettings = async ({
     return invalidateCheckout()
   }
 
+  // fetch theme settings from Storyblok
+  let partnerSettings = { ...DEFAULT_PARTNER_SETTINGS }
+
+  if (order.metadata?.partner) {
+    const fetchedSettings = await getPartnerSettings(order.metadata?.partner)
+    if (fetchedSettings) partnerSettings = { ...fetchedSettings }
+  } else {
+    console.warn("Order metadata does not contain partner information.")
+    console.info("Using default partner settings.")
+  }
+
   const appSettings: CheckoutSettings = {
     accessToken,
     endpoint: `https://${slug}.${domain}`,
@@ -260,9 +277,9 @@ export const getSettings = async ({
     isShipmentRequired,
     validCheckout: true,
     logoUrl: organization.logo_url,
-    companyName: organization.name || "Test company",
+    companyName: partnerSettings.partnerName || "",
     language: order.language_code || "en",
-    primaryColor: organization.primary_color || "#000000",
+    primaryColor: partnerSettings.brandColors.accent,
     favicon:
       organization.favicon_url ||
       "https://data.commercelayer.app/assets/images/favicons/favicon-32x32.png",
@@ -282,6 +299,7 @@ export const getSettings = async ({
         accessToken,
       },
     }),
+    partnerSettings,
   }
 
   return appSettings

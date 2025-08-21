@@ -35,6 +35,7 @@ import tw from "twin.macro"
 
 interface Props {
   logoUrl: NullableType<string>
+  headerLogo?: HeaderLogo
   primaryColor: string
   orderNumber: string
   companyName: string
@@ -49,6 +50,7 @@ interface Props {
 
 const Checkout: React.FC<Props> = ({
   logoUrl,
+  headerLogo,
   primaryColor,
   orderNumber,
   companyName,
@@ -124,26 +126,17 @@ const Checkout: React.FC<Props> = ({
     return (
       <CustomerContainer isGuest={ctx.isGuest}>
         <LayoutDefault
+          partnerHeaderLogo={headerLogo}
+          partnerName={companyName}
           aside={
             <Sidebar>
-              <Logo
-                logoUrl={logoUrl}
-                companyName={companyName}
-                className="hidden md:block"
-              />
               <SummaryWrapper>
                 <OrderSummary appCtx={ctx} hideItemCodes={hideItemCodes} />
               </SummaryWrapper>
-              <Footer />
             </Sidebar>
           }
           main={
             <div>
-              <Logo
-                logoUrl={logoUrl}
-                companyName={companyName}
-                className="block md:hidden"
-              />
               <MainHeader orderNumber={orderNumber} />
               <StepNav
                 steps={steps}
@@ -152,52 +145,6 @@ const Checkout: React.FC<Props> = ({
                 lastActivable={lastActivableStep}
               />
               <Accordion>
-                <AccordionProvider
-                  activeStep={activeStep}
-                  lastActivableStep={lastActivableStep}
-                  setActiveStep={setActiveStep}
-                  step="Customer"
-                  steps={steps}
-                  isStepDone={
-                    (ctx.isShipmentRequired &&
-                      ctx.hasShippingAddress &&
-                      ctx.hasBillingAddress) ||
-                    (!ctx.isShipmentRequired && ctx.hasBillingAddress)
-                  }
-                >
-                  <AccordionItem
-                    index={1}
-                    header={
-                      <StepHeaderCustomer step={getStepNumber("Customer")} />
-                    }
-                  >
-                    <StepCustomer className="mb-6" step={1} />
-                  </AccordionItem>
-                </AccordionProvider>
-                <>
-                  {ctx.isShipmentRequired && (
-                    <AccordionProvider
-                      activeStep={activeStep}
-                      lastActivableStep={lastActivableStep}
-                      setActiveStep={setActiveStep}
-                      step="Shipping"
-                      steps={steps}
-                      isStepRequired={ctx.isShipmentRequired}
-                      isStepDone={ctx.hasShippingMethod}
-                    >
-                      <AccordionItem
-                        index={2}
-                        header={
-                          <StepHeaderShipping
-                            step={getStepNumber("Shipping")}
-                          />
-                        }
-                      >
-                        <StepShipping className="mb-6" step={2} />
-                      </AccordionItem>
-                    </AccordionProvider>
-                  )}
-                </>
                 <AccordionProvider
                   activeStep={activeStep}
                   lastActivableStep={lastActivableStep}
@@ -261,7 +208,7 @@ const Checkout: React.FC<Props> = ({
 }
 
 const Sidebar = styled.div`
-  ${tw`flex flex-col min-h-full p-5 md:px-8 lg:px-12 lg:pt-10 xl:px-24 xl:pt-12 bg-gray-50`}
+  ${tw`flex flex-col min-h-full p-5 md:px-8 lg:px-12 lg:pt-10 xl:px-24 xl:pt-12 bg-brand-base`}
 `
 const SummaryWrapper = styled.div`
   ${tw`flex-1`}
